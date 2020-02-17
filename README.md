@@ -22,6 +22,7 @@ Create (or reuse) an S3 bucket (`eg: s3-bucket-name`) and folder (`eg: path/to/e
       ],
       "Resource": "arn:aws:s3:::__s3-bucket-name/path/to/empty/folder__/*"
   }
+```
 
 ## Building GDAL
 SSH into EC2 machine and build gdal by copy-pasta the `gdal-build-script.sh`. The script uses s3cmd to transfer the builds onto the S3 above.
