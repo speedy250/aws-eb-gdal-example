@@ -37,14 +37,16 @@ make -j $(( 2 * $(cat /proc/cpuinfo | egrep ^processor | wc -l) )) \
  && sudo make install \
  && sudo ldconfig
 
-# Compilation work for proj4.
-mkdir -p "/tmp/proj-${PROJ4_VERSION}-build"
-cd "/tmp/proj-${PROJ4_VERSION}-build"
-curl -o "proj-${PROJ4_VERSION}.tar.gz" \
-    "http://download.osgeo.org/proj/proj-${PROJ4_VERSION}.tar.gz" \
-    && tar xfz "proj-${PROJ4_VERSION}.tar.gz"
-cd "/tmp/proj-${PROJ4_VERSION}-build/proj-${PROJ4_VERSION}"
-./configure --prefix=/usr/local/proj4
+# Compilation work for gdal.
+mkdir -p "/tmp/gdal-${GDAL_VERSION}-build"
+cd "/tmp/gdal-${GDAL_VERSION}-build"
+curl -o "gdal-${GDAL_VERSION}.tar.gz" \
+    "http://download.osgeo.org/gdal/${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz" \
+    && tar xfz "gdal-${GDAL_VERSION}.tar.gz"
+cd "/tmp/gdal-${GDAL_VERSION}-build/gdal-${GDAL_VERSION}"
+./configure --prefix=/usr/local/gdal \
+    --with-static-proj4=/usr/local/proj4 \
+    --without-python
 
 # Make in parallel with 2x the number of processors.
 make -j $(( 2 * $(cat /proc/cpuinfo | egrep ^processor | wc -l) )) \
